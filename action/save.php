@@ -311,9 +311,9 @@ Removed newlines and spaces from beginnings and ends of text enclosed by font ta
                 $matches[0] = preg_replace("/(\w+)\\\\\\\\(\w)/ms","$1@#@",$matches[0]);
                 $matches[0] = preg_replace("/\\\\(\w+)/ms","@!@$1",$matches[0]);
                 $matches[0] = preg_replace("/(\w+)\\\\/ms","@!@$1",$matches[0]);               
-         $matches[0] =  str_replace("\\", "",$matches[0]);              
+                $matches[0] =  str_replace("\\", "",$matches[0]);              
                 $matches[0] =  str_replace("@!@",'\\',$matches[0]);
-         return str_replace("@#@", "\\\\",$matches[0]);              
+                return str_replace("@#@", "\\\\",$matches[0]);              
       },
       $TEXT     
       );
@@ -352,8 +352,8 @@ Removed newlines and spaces from beginnings and ends of text enclosed by font ta
        ); 
 	  $TEXT = str_replace('CBL__Bksl','\\',$TEXT);
 	  $TEXT = preg_replace("/<code\s+file/ms",'<code ',$TEXT);  
-    
-         $TEXT = preg_replace('#((\\){2}\s*)$#', "",$TEXT);
+        /*remove final dw linebreak t end of page */
+         $TEXT = preg_replace('#((\\\\){2}\s*)$#', "",$TEXT);
          return;
     
     }
