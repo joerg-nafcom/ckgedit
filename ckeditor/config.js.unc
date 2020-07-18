@@ -320,6 +320,27 @@ var get_ckgeditor_version = function() {
         );
 }
 
+  config.ckgeditIwikiData = 'UNDEFINED';
+  var getiwikidata = function() {
+      config.jquery.ajax({
+        method: "POST",
+        url: config.doku_url + 'lib/exe/ajax.php',
+        data: { call: 'iwiki_list'}, 
+        dataType: "json",
+          })
+        .done(function(data)
+          {
+              retv = data;             
+              config.ckgeditIwikiData  = retv;
+          })
+          .fail(function(jqXHR, textStatus, errorThrown )
+          {
+            alert(textStatus);
+            alert(errorThrown);
+          });
+   }
+  getiwikidata();
+  
   var SelectOptions = function() {
          var retv;                  
          config.jquery.ajax(
