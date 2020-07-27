@@ -1087,7 +1087,8 @@ CKEDITOR.dialog.add( 'link', function( editor )
 
 		onOk : function()
 		{
-            var wikiIdFromUrl = function (url) {
+            
+   /*         var wikiIdFromUrl = function (url) {
                 if(!url) {
                     url=document.getElementById(fckgInternalInputId).value;
                     if(!url.match(/^:\w+/)) {
@@ -1107,20 +1108,21 @@ CKEDITOR.dialog.add( 'link', function( editor )
 
                 return url;
 			};
-
-			var ok_callback = jQuery.proxy(function (data, heading) {
+*/
+			//var ok_callback = jQuery.proxy(function (data, heading) {
 			    var internal_text = false;
                 var iwiki_text = false;
                 url_text = false;
 				var ImagesAllowed = new RegExp( oDokuWiki_FCKEditorInstance.imageUploadAllowedExtensions);
 				var attributes = {},
 					removeAttributes = [],
+				data = {},
 					linkstyle = 'page',
 					me = this,
 					tested  = false,
 					editor = this.getParentEditor();
 
-
+			this.commitContent( data );
 				 var other_media = false;
                  var media_text;
 
@@ -1179,8 +1181,8 @@ CKEDITOR.dialog.add( 'link', function( editor )
                         data.url.url = data.url.url.replace(/^\:/,"");
                         data.url.url =  ':' + data.url.url.replace(/\//g,':');
                         data.adv.advCSSClasses = "wikilink1";
-						 if(heading && oDokuWiki_FCKEditorInstance.useheading == 'y') {
-							var tmp = heading;
+						 if(internal_text && oDokuWiki_FCKEditorInstance.useheading == 'y') {
+							var tmp = internal_text;
 							var test_1 = tmp.replace(/^:/,"");
 							var test_2 = data.url.url.replace(/^:/,"");
 							if(test_1 != test_2) {
@@ -1447,10 +1449,9 @@ CKEDITOR.dialog.add( 'link', function( editor )
                 //alert(err.toString());
             } }
             
-            }, this);
+            },
 
-
-            var data = {};
+         /*   var data = {};
             this.commitContent( data );
 
             if (data.type == 'internal' && oDokuWiki_FCKEditorInstance.useheading == 'y') {
@@ -1459,8 +1460,8 @@ CKEDITOR.dialog.add( 'link', function( editor )
 				}));
 			} else {
                 ok_callback(data);
-			}
-		},
+			}*/
+		//},
 		onLoad : function()
 		{
             ckgeditIwikiData = editor.config.ckgeditIwikiData;  
@@ -1766,7 +1767,12 @@ var doku_linkwiz = {
         //insert link into field
         var dialog = CKEDITOR.dialog.getCurrent();
         dialog.getContentElement("info", "internal").setValue(link);
+        if(title) {
+            dialog.getContentElement("info", "internal_text").setValue(title);
+        }
+      else { 
         dialog.getContentElement("info", "internal_text").setValue(link);  
+      }
 
         doku_linkwiz.hide();
 
